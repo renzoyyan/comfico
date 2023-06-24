@@ -16,12 +16,22 @@
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+@layer base {
+  body {
+    @apply font-normal text-brand-1;
+  }
+}
+
+@layer components {
+  .icon-default {
+    @apply h-6 w-6;
+  }
+
+  .icon-sm {
+    @apply h-5 w-5;
+  }
+
+  .section-heading {
+    @apply font-playfair-display text-4xl font-semibold xl:text-[3.5rem];
+  }
 }
