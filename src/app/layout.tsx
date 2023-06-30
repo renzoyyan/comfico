@@ -25,11 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={cn(source_sans_3.variable, playfair_display.variable)}>
       <body className={cn('bg-white font-source-sans-3')}>
         <Toaster />
-        <>
-          <Navbar />
-          {children}
-          <Footer />
-        </>
+        {children}
       </body>
     </html>
   );

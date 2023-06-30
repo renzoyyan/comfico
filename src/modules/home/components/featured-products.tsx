@@ -1,4 +1,5 @@
-import { ProductCard } from '@/shared/ui/product-card';
+import { products } from '@/modules/product/constants';
+import { ProductCard } from '@/modules/product/components/product-card';
 
 export const FeaturedProducts = () => {
   return (
@@ -9,10 +10,16 @@ export const FeaturedProducts = () => {
 
         <div className="mt-12">
           <div className="flex snap-x snap-mandatory gap-x-4 overflow-x-auto scrollbar-hide sm:gap-x-6  lg:grid lg:grid-cols-4">
-            <ProductCard variant={'outline'} className="w-[90%] sm:w-[310px] lg:w-[unset]" />
-            <ProductCard variant={'outline'} className="w-[90%] sm:w-[310px] lg:w-[unset]" />
-            <ProductCard variant={'outline'} className="w-[90%] sm:w-[310px] lg:w-[unset]" />
-            <ProductCard variant={'outline'} className="w-[90%] sm:w-[310px] lg:w-[unset]" />
+            {products
+              .filter(prod => prod.isFeatured)
+              .map(product => (
+                <ProductCard
+                  variant={'outline'}
+                  key={product.id}
+                  product={product}
+                  className="w-full sm:w-[310px] lg:w-[unset]"
+                />
+              ))}
           </div>
         </div>
       </div>

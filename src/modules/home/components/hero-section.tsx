@@ -22,7 +22,14 @@ export const HeroSection = () => {
         </div>
         <div className="relative lg:col-span-5 lg:-mr-8 xl:absolute xl:inset-0 xl:left-1/2 xl:mr-0">
           <div className="relative aspect-[3/2] w-full bg-gray-50 lg:absolute lg:inset-0 lg:aspect-auto lg:h-full">
-            <Image src={HeroImg} fill alt="comfico" className="object-cover" />
+            <Image
+              src={HeroImg}
+              fill
+              alt="comfico"
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              priority
+            />
           </div>
         </div>
       </div>

@@ -5,12 +5,12 @@ import Link from 'next/link';
 
 export const Footer = () => {
   return (
-    <footer className="bg-brand-2 py-36 lg:py-56">
+    <footer className="bg-brand-2 py-36 lg:pt-56">
       <div className="container">
         <div className="grid gap-y-12 lg:grid-cols-2">
           <div>
             <Logo className="text-5xl text-white" />
-            <p className="mt-6 w-96 text-[#D9D9D9]">
+            <p className="mt-6 text-[#D9D9D9] sm:w-96">
               Immerse Yourself in the World of Stylish Seating, Crafted to Perfection for the
               Discerning Interior Enthusiast.
             </p>

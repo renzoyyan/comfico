@@ -9,7 +9,13 @@ export const LimitedOffer = () => {
     <section className="container  bg-brand-2 lg:h-[750px] lg:max-w-none lg:px-0">
       <div className="grid h-full items-center gap-x-12 text-white lg:grid-cols-2 xl:gap-x-28">
         <div className="relative hidden h-full w-full lg:block">
-          <Image src={YellowChair} alt="Yellow Chair" fill className="object-cover" />
+          <Image
+            src={YellowChair}
+            alt="Yellow Chair"
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover"
+          />
         </div>
         <div className="space-y-[50px] py-36">
           <div>

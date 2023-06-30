@@ -6,16 +6,19 @@ import {
   Products,
   Services,
 } from '@/modules/home';
+import { PageLayout } from '@/shared/layout';
 
 export default function Home() {
   return (
-    <main>
-      <HeroSection />
-      <FeaturedProducts />
-      <Services />
-      <Products />
-      <LimitedOffer />
-      <Newsletter />
-    </main>
+    <PageLayout>
+      <main>
+        <HeroSection />
+        <FeaturedProducts />
+        <Services />
+        <Products />
+        <LimitedOffer />
+        <Newsletter />
+      </main>
+    </PageLayout>
   );
 }
