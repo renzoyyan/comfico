@@ -1,5 +1,6 @@
 'use client';
 import { ShoppingBag, ShoppingCart, X } from 'lucide-react';
+import Link from 'next/link';
 
 import {
   Sheet,
@@ -13,8 +14,8 @@ import {
 import { Button, buttonVariants } from '@/shared/ui/button';
 import { CartProduct } from './cart-product';
 import { useCartStore } from '@/shared/store/cart';
-import Link from 'next/link';
 import { useStore } from '@/shared/hooks/use-store';
+import { ROUTES } from '@/shared/constants/routes';
 
 export const SideCart = () => {
   const store = useStore(useCartStore, state => state);
@@ -64,7 +65,7 @@ export const SideCart = () => {
 
               <SheetClose asChild>
                 <Link
-                  href="#"
+                  href={ROUTES.SHOP}
                   className={buttonVariants({ variant: 'outline', size: 'lg', className: 'mb-36' })}
                 >
                   Start shopping

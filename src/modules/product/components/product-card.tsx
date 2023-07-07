@@ -1,6 +1,6 @@
 'use client';
 
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
 import React from 'react';
 
 import { Button, ButtonProps } from '../../../shared/ui/button';
@@ -8,28 +8,39 @@ import WhiteChair from '@/shared/assets/images/white-chair.jpg';
 import { cn } from '../../../shared/utils/commons';
 import { useCartStore } from '../../../shared/store/cart';
 import { TProduct } from '@/modules/product/types';
+import Link from 'next/link';
+import { ROUTES } from '@/shared/constants/routes';
 
 type Props = ButtonProps & {
   product: Omit<TProduct, 'createdAt'>;
+  orientation?: 'vertical' | 'horizontal';
   className?: string;
 };
 
-const ProductCard = (props: Props) => {
+export const ProductCard = (props: Props) => {
   const addToCart = useCartStore(state => state.handleAddProductToCart);
 
-  const { product, className, ...btnProps } = props;
+  const { product, className, orientation = 'vertical', ...btnProps } = props;
 
   return (
-    <div className={cn('flex shrink-0 snap-start flex-col', className)}>
-      <div className="relative aspect-square w-full">
-        <Image
-          src={product?.image ?? WhiteChair}
-          alt={product?.name}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="rounded-lg  object-cover"
-        />
-      </div>
+    <div
+      className={cn(
+        'flex shrink-0 snap-start',
+        className,
+        orientation === 'vertical' ? 'flex-col' : 'flex-row'
+      )}
+    >
+      <Link href={`${ROUTES.SHOP}/${product.id}?productName=${product.name}`}>
+        <div className="relative aspect-square w-full overflow-hidden">
+          <Image
+            src={product?.image ?? WhiteChair}
+            alt={product?.name}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="transform  rounded-lg object-cover transition duration-150  hover:scale-110"
+          />
+        </div>
+      </Link>
 
       <div className="mt-4">
         <div className="flex items-center justify-between">
@@ -46,5 +57,3 @@ const ProductCard = (props: Props) => {
     </div>
   );
 };
-
-export { ProductCard };

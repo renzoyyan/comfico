@@ -10,6 +10,10 @@ import WhiteChair2 from '@/shared/assets/images/white-chair-2.jpg';
 import WhiteChair from '@/shared/assets/images/white-chair.jpg';
 import WoodenChair from '@/shared/assets/images/wooden-chair.jpg';
 
+// SUB PHOTOS
+import GraySofaSub from '@/shared/assets/images/sub-photos/sofa-gray.jpg';
+import GraySofaSub2 from '@/shared/assets/images/sub-photos/sofa-gray-1.jpg';
+
 export const products = [
   {
     id: faker.string.uuid(),
@@ -18,6 +22,7 @@ export const products = [
     stock: Math.floor(Math.random() * 100),
     qty: 0,
     image: GraySofa,
+    subPhotos: [GraySofaSub, GraySofaSub2],
     category: ProductCategory.SOFA,
     isFeatured: true,
     createdAt: faker.date.recent(),
@@ -29,6 +34,7 @@ export const products = [
     stock: Math.floor(Math.random() * 100),
     qty: 0,
     image: BlackChair,
+    subPhotos: [],
     category: ProductCategory.CHAIR,
     isFeatured: true,
     createdAt: faker.date.recent(),
@@ -40,6 +46,7 @@ export const products = [
     stock: Math.floor(Math.random() * 100),
     qty: 0,
     image: GreenSofa,
+    subPhotos: [],
     category: ProductCategory.SOFA,
     isFeatured: true,
     createdAt: faker.date.recent(),
@@ -51,6 +58,7 @@ export const products = [
     stock: Math.floor(Math.random() * 100),
     qty: 0,
     image: DarkGreenChair,
+    subPhotos: [],
     category: ProductCategory.CHAIR,
     isFeatured: true,
     createdAt: faker.date.recent(),
@@ -62,6 +70,7 @@ export const products = [
     stock: Math.floor(Math.random() * 100),
     qty: 0,
     image: GrayChair,
+    subPhotos: [],
     category: ProductCategory.CHAIR,
     isFeatured: false,
     createdAt: faker.date.recent(),
@@ -73,6 +82,7 @@ export const products = [
     stock: Math.floor(Math.random() * 100),
     qty: 0,
     image: OfficeChair,
+    subPhotos: [],
     category: ProductCategory.CHAIR,
     isFeatured: false,
     createdAt: faker.date.recent(),
@@ -84,6 +94,7 @@ export const products = [
     stock: Math.floor(Math.random() * 100),
     qty: 0,
     image: WoodenChair,
+    subPhotos: [],
     category: ProductCategory.CHAIR,
     isFeatured: false,
     createdAt: faker.date.recent(),
@@ -95,6 +106,7 @@ export const products = [
     stock: Math.floor(Math.random() * 100),
     qty: 0,
     image: WhiteChair2,
+    subPhotos: [],
     category: ProductCategory.CHAIR,
     isFeatured: false,
     createdAt: faker.date.recent(),
@@ -106,6 +118,7 @@ export const products = [
     stock: Math.floor(Math.random() * 100),
     qty: 0,
     image: WhiteChair,
+    subPhotos: [],
     category: ProductCategory.CHAIR,
     isFeatured: false,
     createdAt: faker.date.recent(),

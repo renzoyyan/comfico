@@ -60,7 +60,7 @@ export const useCartStore = create(
           toast({
             title: `New item added`,
             variant: 'success',
-            description: '${product.name} has been added to your cart',
+            description: `${product.name} has been added to your cart`,
           });
         } else {
           const updatedProducts = products.map(prod => (prod.id === product.id ? item : prod));

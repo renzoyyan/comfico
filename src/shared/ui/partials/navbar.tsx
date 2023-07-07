@@ -1,19 +1,23 @@
 'use client';
 
 import React from 'react';
-import { Logo } from './logo';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
+import { Logo } from './logo';
 import { cn } from '@/shared/utils/commons';
 import { Button } from '../button';
 import { SideCart } from '@/modules/product';
+import { navbarLinks } from '@/shared/constants/links';
+import { ROUTES } from '@/shared/constants/routes';
 
 export const Navbar = () => {
   const [offset, setOffset] = React.useState(false);
+  const pathname = usePathname();
 
   React.useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 200) {
+      if (window.scrollY > 80) {
         setOffset(true);
       } else setOffset(false);
     };
@@ -30,12 +34,20 @@ export const Navbar = () => {
       )}
     >
       <div className="container flex items-center justify-between">
-        <Logo />
+        <Link href={ROUTES.HOME}>
+          <Logo />
+        </Link>
 
         <nav className="hidden space-x-14 lg:block">
-          <Link href={'/'}>Shop</Link>
-          <Link href={'/'}>Collections</Link>
-          <Link href={'/'}>Contact</Link>
+          {navbarLinks.map(item => (
+            <Link
+              href={item.href}
+              key={item.href}
+              className={cn(pathname.startsWith(item.href) && 'font-semibold text-brand-2')}
+            >
+              {item.label}
+            </Link>
+          ))}
         </nav>
 
         <div className="flex items-center gap-x-3.5">
