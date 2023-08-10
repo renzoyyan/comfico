@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
-import { persist, createJSONStorage } from 'zustand/middleware';
-import { TProduct } from '@/modules/product/types';
+import { persist } from 'zustand/middleware';
+import { Product as TProduct } from '@/modules/product/types';
 import { toast } from '../hooks/use-toast';
 
 export type Product = Omit<TProduct, 'createdAt'>;

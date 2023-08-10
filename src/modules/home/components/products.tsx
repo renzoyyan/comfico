@@ -1,13 +1,13 @@
-import { products } from '@/modules/product/constants';
 import { Button } from '@/shared/ui/button';
 import { ProductCard } from '@/modules/product';
 import React from 'react';
+import { getProducts } from '@/modules/product/services';
 
-export const Products = () => {
-  const notFeatured = products.filter(prod => !prod.isFeatured);
+export const Products = async () => {
+  const { data: products } = await getProducts({ is_featured: false });
 
   return (
-    <section className="">
+    <section>
       <div className="container py-36 ">
         <div className="mb-10 flex items-center">
           <h2 className="section-heading flex-1 text-4xl">Chairs Selection</h2>
@@ -17,7 +17,7 @@ export const Products = () => {
         </div>
 
         <div className="hidden gap-x-4 gap-y-16 sm:grid-cols-3 lg:grid lg:grid-cols-4 xl:gap-y-28">
-          {notFeatured.map(product => (
+          {products.map(product => (
             <ProductCard
               variant={'outline'}
               key={product.id}
@@ -28,7 +28,7 @@ export const Products = () => {
         </div>
 
         <div className="flex snap-x snap-mandatory gap-x-4 overflow-x-auto scrollbar-hide sm:gap-x-6  lg:hidden">
-          {notFeatured.slice(0, 4).map(product => (
+          {products.slice(0, 4).map(product => (
             <ProductCard
               variant={'outline'}
               key={product.id}

@@ -40,7 +40,7 @@ export const CartProduct = ({ product }: Props) => {
       <div className="h-[100px] w-[100px]">
         <div className="relative flex h-full w-full">
           <Image
-            src={product?.image ?? Sofa}
+            src={product?.images.length > 0 ? product?.images[0].url : Sofa}
             alt={product?.name}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             fill
@@ -50,7 +50,7 @@ export const CartProduct = ({ product }: Props) => {
       </div>
 
       <div>
-        <h4 className="text-xs uppercase text-gray-400">{product?.category}</h4>
+        <h4 className="text-xs uppercase text-gray-400">{product?.category?.name}</h4>
         <h3 className="mt-1 text-lg font-medium uppercase">{product?.name}</h3>
 
         <div className="5 mt-2.5 inline-flex gap-x-1">

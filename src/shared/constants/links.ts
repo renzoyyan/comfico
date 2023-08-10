@@ -2,15 +2,18 @@ import { ROUTES } from './routes';
 
 export const navbarLinks = [
   {
-    label: 'Shop',
-    href: ROUTES.SHOP,
+    label: 'Home',
+    href: ROUTES.HOME,
+    path: 'home',
   },
   {
-    label: 'Collections',
-    href: ROUTES.COLLECTION,
+    label: 'Shop',
+    href: ROUTES.SHOP,
+    path: 'shop',
   },
   {
     label: 'Contact',
     href: ROUTES.CONTACT_US,
+    path: 'contact-us',
   },
 ];

@@ -1,7 +1,9 @@
-import { products } from '@/modules/product/constants';
 import { ProductCard } from '@/modules/product/components/product-card';
+import { getProducts } from '@/modules/product/services';
 
-export const FeaturedProducts = () => {
+export const FeaturedProducts = async () => {
+  const { data: featuredProducts } = await getProducts({ is_featured: true });
+
   return (
     <section className="relative">
       <div className="absolute left-0 -z-10 hidden h-full w-1/2 bg-secondary sm:block" />
@@ -10,16 +12,14 @@ export const FeaturedProducts = () => {
 
         <div className="mt-12">
           <div className="flex snap-x snap-mandatory gap-x-4 overflow-x-auto scrollbar-hide sm:gap-x-6  lg:grid lg:grid-cols-4">
-            {products
-              .filter(prod => prod.isFeatured)
-              .map(product => (
-                <ProductCard
-                  variant={'outline'}
-                  key={product.id}
-                  product={product}
-                  className="w-full sm:w-[310px] lg:w-[unset]"
-                />
-              ))}
+            {featuredProducts.map(product => (
+              <ProductCard
+                variant={'outline'}
+                key={product.id}
+                product={product}
+                className="w-full sm:w-[310px] lg:w-[unset]"
+              />
+            ))}
           </div>
         </div>
       </div>

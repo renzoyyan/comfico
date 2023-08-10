@@ -12,6 +12,7 @@ import {
 import { Filter as FilterIcon } from 'lucide-react';
 import React from 'react';
 import { Filter } from './filter';
+import { Category } from '../types';
 
 export const FilterPanel = () => {
   return (

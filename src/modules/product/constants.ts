@@ -1,4 +1,4 @@
-import { ProductCategory, TProduct } from './types';
+import { ProductCategory, Product } from './types';
 import { faker } from '@faker-js/faker';
 import GraySofa from '@/shared/assets/images/sofa-gray.jpg';
 import GreenSofa from '@/shared/assets/images/sofa-green.jpg';
@@ -123,4 +123,4 @@ export const products = [
     isFeatured: false,
     createdAt: faker.date.recent(),
   },
-] satisfies TProduct[];
+] satisfies Product[];

@@ -7,12 +7,12 @@ import { Button, ButtonProps } from '../../../shared/ui/button';
 import WhiteChair from '@/shared/assets/images/white-chair.jpg';
 import { cn } from '../../../shared/utils/commons';
 import { useCartStore } from '../../../shared/store/cart';
-import { TProduct } from '@/modules/product/types';
+import { Product } from '@/modules/product/types';
 import Link from 'next/link';
 import { ROUTES } from '@/shared/constants/routes';
 
 type Props = ButtonProps & {
-  product: Omit<TProduct, 'createdAt'>;
+  product: Product;
   orientation?: 'vertical' | 'horizontal';
   className?: string;
 };
@@ -30,10 +30,14 @@ export const ProductCard = (props: Props) => {
         orientation === 'vertical' ? 'flex-col' : 'flex-row'
       )}
     >
-      <Link href={`${ROUTES.SHOP}/${product.id}?productName=${product.name}`}>
+      <Link href={`${ROUTES.SHOP}/${product.id}?product_name=${product.name}`}>
         <div className="relative aspect-square w-full overflow-hidden">
           <Image
-            src={product?.image ?? WhiteChair}
+            src={
+              product?.images?.length > 0
+                ? product.images[0].url
+                : 'https://placehold.co/300x300/png'
+            }
             alt={product?.name}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -45,10 +49,10 @@ export const ProductCard = (props: Props) => {
       <div className="mt-4">
         <div className="flex items-center justify-between">
           <h3 className="text-xl font-semibold xl:text-2xl">{product?.name}</h3>
-          <h4 className="text-base font-semibold ">₱{product?.price}</h4>
+          <h4 className="text-base font-semibold ">₱{product?.price.toFixed(2)}</h4>
         </div>
         <p className="mb-4 mt-2 pr-4 text-sm text-brand-4  sm:text-base">
-          Yorem ipsum dolor sit amet, consectetur. Lorem ipsum.
+          {product?.short_description}
         </p>
         <Button {...btnProps} onClick={() => addToCart(product)}>
           Add to cart

@@ -16,21 +16,27 @@ import { CartProduct } from './cart-product';
 import { useCartStore } from '@/shared/store/cart';
 import { useStore } from '@/shared/hooks/use-store';
 import { ROUTES } from '@/shared/constants/routes';
+import { useRouter } from 'next/navigation';
+import { sleep } from '@/shared/utils/commons';
+import { useState } from 'react';
+import { CircularLoader } from '@/shared/ui/circular-loader';
 
 export const SideCart = () => {
+  const [isRedirecting, setIsRedirecting] = useState(false);
   const store = useStore(useCartStore, state => state);
+  const router = useRouter();
 
   if (!store?._hasHydrated) {
     return null;
   }
 
   const amountWithoutTax = store.products.reduce((acc, item) => acc + item.qty * item.price, 0);
-  const taxAmount = (amountWithoutTax * 0.15).toFixed(2);
+  // const taxAmount = (amountWithoutTax * 0.15).toFixed(2);
 
-  const totalAmount = (amountWithoutTax + +taxAmount).toFixed(2);
+  // const totalAmount = (amountWithoutTax + +taxAmount).toFixed(2);
 
   return (
-    <Sheet>
+    <Sheet modal={false}>
       <SheetTrigger asChild>
         <div role="button" className="flex items-center gap-x-1.5">
           <div className="relative">
@@ -44,7 +50,7 @@ export const SideCart = () => {
           <span>Cart</span>
         </div>
       </SheetTrigger>
-      <SheetContent withOverlay={false} hideCloseBtn className="w-full px-0 lg:max-w-md">
+      <SheetContent hideCloseBtn className="w-full px-0 lg:max-w-md">
         <SheetHeader className="mb-4 flex flex-row items-center justify-between px-6">
           <SheetTitle>Your Cart</SheetTitle>
           <SheetClose asChild>
@@ -88,23 +94,34 @@ export const SideCart = () => {
                 <h4 className="flex-1">Shipping</h4>
                 <h4 className="font-medium">--</h4>
               </div>
-              <div className="flex items-center px-6 py-4 font-light text-gray-400">
+              {/* <div className="flex items-center px-6 py-4 font-light text-gray-400">
                 <h4 className="flex-1">Tax</h4>
                 <h4 className="font-medium">₱{taxAmount}</h4>
-              </div>
+              </div> */}
 
               <hr className="h-px w-full text-gray-100" />
               <div className="flex items-center px-6 py-4 font-light text-gray-400">
                 <h4 className="flex-1">Total (PHP)</h4>
-                <h4 className="font-semibold text-black">₱{totalAmount}</h4>
+                <h4 className="font-semibold text-black">₱{amountWithoutTax}</h4>
               </div>
             </div>
             <div className="mt-8 px-6 text-right">
-              <SheetClose asChild>
-                <Button type="submit" size={'lg'}>
-                  Checkout
-                </Button>
-              </SheetClose>
+              <Button
+                type="button"
+                size={'lg'}
+                disabled={isRedirecting}
+                onClick={async () => {
+                  setIsRedirecting(true);
+
+                  router.push(ROUTES.CHECKOUT);
+                  await sleep(5000);
+
+                  setIsRedirecting(false);
+                }}
+              >
+                {isRedirecting && <CircularLoader />}
+                Checkout
+              </Button>
             </div>
           </SheetFooter>
         )}

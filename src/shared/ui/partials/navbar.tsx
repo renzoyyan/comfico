@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSelectedLayoutSegment } from 'next/navigation';
 
 import { Logo } from './logo';
 import { cn } from '@/shared/utils/commons';
@@ -43,7 +43,7 @@ export const Navbar = () => {
             <Link
               href={item.href}
               key={item.href}
-              className={cn(pathname.startsWith(item.href) && 'font-semibold text-brand-2')}
+              className={cn(pathname.includes(item.path) && 'font-semibold text-brand-2')}
             >
               {item.label}
             </Link>

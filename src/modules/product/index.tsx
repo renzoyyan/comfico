@@ -3,3 +3,7 @@ export * from './components/cart/side-cart';
 export * from './components/product-card';
 export * from './components/filter-panel';
 export * from './components/filter';
+export * from './components/collections';
+export * from './components/collections-loader';
+export * from './components/checkout-form';
+export * from './components/product-slider';

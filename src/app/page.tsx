@@ -1,4 +1,7 @@
+import { Suspense } from 'react';
+
 import {
+  FeaturedLoader,
   FeaturedProducts,
   HeroSection,
   LimitedOffer,
@@ -13,9 +16,13 @@ export default function Home() {
     <PageLayout>
       <main>
         <HeroSection />
-        <FeaturedProducts />
+        <Suspense fallback={<FeaturedLoader />}>
+          <FeaturedProducts />
+        </Suspense>
         <Services />
-        <Products />
+        <Suspense fallback={<p>Loading products</p>}>
+          <Products />
+        </Suspense>
         <LimitedOffer />
         <Newsletter />
       </main>
