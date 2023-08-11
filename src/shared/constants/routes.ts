@@ -3,5 +3,7 @@ export const ROUTES = {
   COLLECTION: '#',
   CONTACT_US: '#',
   HOME: '/',
-  CHECKOUT: '/checkout',
-};
+  CART: '/cart',
+  LOGIN: '/auth/login',
+  REGISTER: '/auth/register',
+} as const;

@@ -39,10 +39,10 @@ function ThumbnailPlugin(mainRef: MutableRefObject<KeenSliderInstance | null>): 
   };
 }
 
-type Props = {
+export type ProductSliderProps = {
   product: Product;
 };
-export const ProductSlider = ({ product }: Props) => {
+export const ProductSlider = ({ product }: ProductSliderProps) => {
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
     initial: 0,
   });
@@ -67,7 +67,8 @@ export const ProductSlider = ({ product }: Props) => {
                 src={image.url}
                 alt={product.name}
                 fill
-                className="h-auto w-auto rounded-lg object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="h-auto w-auto rounded-lg object-cover object-right"
               />
             </div>
           </div>
@@ -78,7 +79,13 @@ export const ProductSlider = ({ product }: Props) => {
         {product.images.map(image => (
           <div className="keen-slider__slide" key={image.id}>
             <div className="relative aspect-square w-full">
-              <Image src={image.url} alt={product.name} fill className="h-auto w-auto rounded-lg" />
+              <Image
+                src={image.url}
+                alt={product.name}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="h-auto w-auto rounded-lg object-cover object-right"
+              />
             </div>
           </div>
         ))}

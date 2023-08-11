@@ -1,8 +1,9 @@
-import { Toaster } from '@/shared/ui/toaster';
-import '../styles/globals.css';
 import { Playfair_Display, Source_Sans_3 } from 'next/font/google';
+import { Toaster } from '@/shared/ui/toaster';
+import { Toaster as RHToaster } from 'react-hot-toast';
 import { cn } from '@/shared/utils/commons';
-import { Footer, Navbar } from '@/shared/ui/partials';
+import { NextAuthProvider } from '@/shared/layout';
+import '../styles/globals.css';
 
 const playfair_display = Playfair_Display({
   subsets: ['latin'],
@@ -25,7 +26,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={cn(source_sans_3.variable, playfair_display.variable)}>
       <body className={cn('bg-white font-source-sans-3')}>
         <Toaster />
-        {children}
+        <RHToaster />
+        <NextAuthProvider>{children}</NextAuthProvider>
       </body>
     </html>
   );

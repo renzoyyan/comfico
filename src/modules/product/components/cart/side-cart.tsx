@@ -1,6 +1,8 @@
 'use client';
 import { ShoppingBag, ShoppingCart, X } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 import {
   Sheet,
@@ -16,15 +18,15 @@ import { CartProduct } from './cart-product';
 import { useCartStore } from '@/shared/store/cart';
 import { useStore } from '@/shared/hooks/use-store';
 import { ROUTES } from '@/shared/constants/routes';
-import { useRouter } from 'next/navigation';
 import { sleep } from '@/shared/utils/commons';
-import { useState } from 'react';
 import { CircularLoader } from '@/shared/ui/circular-loader';
+import { useAuth } from '@/shared/hooks/use-auth';
 
 export const SideCart = () => {
   const [isRedirecting, setIsRedirecting] = useState(false);
   const store = useStore(useCartStore, state => state);
   const router = useRouter();
+  const { user } = useAuth();
 
   if (!store?._hasHydrated) {
     return null;
@@ -34,6 +36,17 @@ export const SideCart = () => {
   // const taxAmount = (amountWithoutTax * 0.15).toFixed(2);
 
   // const totalAmount = (amountWithoutTax + +taxAmount).toFixed(2);
+
+  const handleCheckout = () => {
+    setIsRedirecting(true);
+    if (!user) {
+      localStorage.setItem('callbackUrl', ROUTES.CART);
+      return router.push(ROUTES.LOGIN);
+    }
+    sleep();
+    router.push(ROUTES.CART);
+    setIsRedirecting(false);
+  };
 
   return (
     <Sheet modal={false}>
@@ -106,19 +119,7 @@ export const SideCart = () => {
               </div>
             </div>
             <div className="mt-8 px-6 text-right">
-              <Button
-                type="button"
-                size={'lg'}
-                disabled={isRedirecting}
-                onClick={async () => {
-                  setIsRedirecting(true);
-
-                  router.push(ROUTES.CHECKOUT);
-                  await sleep(5000);
-
-                  setIsRedirecting(false);
-                }}
-              >
+              <Button type="button" size={'lg'} disabled={isRedirecting} onClick={handleCheckout}>
                 {isRedirecting && <CircularLoader />}
                 Checkout
               </Button>

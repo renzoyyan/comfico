@@ -40,7 +40,7 @@ export const CartProduct = ({ product }: Props) => {
       <div className="h-[100px] w-[100px]">
         <div className="relative flex h-full w-full">
           <Image
-            src={product?.images.length > 0 ? product?.images[0].url : Sofa}
+            src={product?.images?.length > 0 ? product?.images[0].url : Sofa}
             alt={product?.name}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             fill
@@ -66,6 +66,7 @@ export const CartProduct = ({ product }: Props) => {
               size={'icon'}
               className="h-8 rounded-md border border-gray-200 bg-white shadow-sm hover:bg-gray-50"
               onClick={() => decreaseQty(product)}
+              disabled={product.stock === 0}
             >
               <Minus className="h-4 w-4 text-gray-500" />
             </Button>
@@ -79,6 +80,7 @@ export const CartProduct = ({ product }: Props) => {
               size={'icon'}
               className="h-8 rounded-md border border-gray-200 bg-white shadow-sm hover:bg-gray-50"
               onClick={() => increaseQty(product)}
+              disabled={product.stock === 0 || product.stock > product.qty}
             >
               <Plus className="h-4 w-4 text-gray-500" />
             </Button>

@@ -127,7 +127,6 @@ export const Filter = ({ categories }: Props) => {
           onClick={handleReset}
           disabled={formState.isSubmitting}
         >
-          {formState.isSubmitting && <CircularLoader className={cn('mr-2')} />}
           Reset
         </Button>
         <Button

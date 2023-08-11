@@ -3,9 +3,9 @@ import { ROUTES } from '@/shared/constants/routes';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 
-const Checkout = () => {
+const CartPage = () => {
   return (
-    <main className="mx-auto max-w-7xl pt-20">
+    <main className="container py-20">
       <Link href={ROUTES.SHOP} className="mb-10 inline-flex items-center text-sm text-gray-500">
         <ArrowLeft className="mr-2 h-5 w-5 text-gray-400" />
         Back
@@ -16,4 +16,4 @@ const Checkout = () => {
   );
 };
 
-export default Checkout;
+export default CartPage;

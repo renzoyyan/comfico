@@ -1,7 +1,6 @@
-import { ProductSlider } from '@/modules/product';
+import { ProductInfo, ProductSlider } from '@/modules/product';
 import { getProduct } from '@/modules/product/services';
 import { PageLayout } from '@/shared/layout';
-import React from 'react';
 
 const Product = async ({ params }: { params: { productId: string } }) => {
   const { data: product } = await getProduct(params.productId);
@@ -10,13 +9,9 @@ const Product = async ({ params }: { params: { productId: string } }) => {
     <PageLayout>
       <main className="container">
         <section className="py-48">
-          <div className="grid gap-x-16 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-y-8 lg:grid-cols-2 lg:gap-x-16 xl:grid-cols-3">
             <ProductSlider product={product} />
-            <div>
-              <h1 className="text-3xl font-bold">{product.name}</h1>
-              <h2>₱{product.price.toFixed(2)}</h2>
-              <h2>₱{product.price.toFixed(2)}</h2>
-            </div>
+            <ProductInfo product={product} />
           </div>
         </section>
       </main>

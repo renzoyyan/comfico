@@ -1,29 +1,19 @@
 'use client';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 
 import { useStore } from '@/shared/hooks/use-store';
 import { useCartStore } from '@/shared/store/cart';
 import { Button } from '@/shared/ui/button';
-import { CircularLoader } from '@/shared/ui/circular-loader';
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/shared/ui/form';
-import { Input } from '@/shared/ui/input';
-import { useForm, FieldValues } from 'react-hook-form';
-import { CartProduct } from './cart/cart-product';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { CheckoutProduct } from './checkout-product';
+import api from '@/shared/utils/api';
+import { toast } from 'react-hot-toast';
 
 export const CheckoutForm = () => {
+  const searchParams = useSearchParams();
   const store = useStore(useCartStore, state => state);
+
   const router = useRouter();
-  const methods = useForm();
-  const { control, formState, handleSubmit } = methods;
 
   useEffect(() => {
     if (store?._hasHydrated && store.products.length === 0) {
@@ -31,176 +21,74 @@ export const CheckoutForm = () => {
     }
   }, [router, store]);
 
+  useEffect(() => {
+    if (searchParams.get('success')) {
+      toast.success('Payment completed.');
+      store?.handleRemoveAll();
+    }
+
+    if (searchParams.get('cancelled')) {
+      toast.error('Something went wrong.');
+    }
+  }, [searchParams, store]);
+
   if (!store?._hasHydrated) {
     return <></>;
   }
 
   const amountWithoutTax = store.products.reduce((acc, item) => acc + item.qty * item.price, 0);
+  const taxAmount = (amountWithoutTax * 0.15).toFixed(2);
+  const totalAmount = (amountWithoutTax + +taxAmount).toFixed(2);
 
-  const handlePlaceOrder = (payload: FieldValues) => {
-    console.log(payload);
+  const handlePlaceOrder = async () => {
+    const response = await api.post('/api/checkout', {
+      products: store.products,
+      user_id: '64d6147e310276a3dd58aa9a',
+    });
+
+    window.location = response.data.url;
   };
 
   return (
-    <div className="flex gap-10">
-      <Form {...methods}>
-        <section className="flex-[2]">
-          <div className="mb-8">
-            <h2 className="mb-6 text-lg font-semibold">Delivery Information</h2>
-
-            <div className="grid gap-x-8 gap-y-4 rounded-lg bg-white p-8 shadow-sm sm:grid-cols-2">
-              <FormField
-                control={control}
-                rules={{ required: 'This field is required' }}
-                name="first_name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>First name</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormDescription />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={control}
-                rules={{ required: 'This field is required' }}
-                name="last_name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Last name</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormDescription />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={control}
-                rules={{
-                  required: 'This field is required',
-                  pattern: {
-                    value: /\S+@\S+\.\S+/,
-                    message: 'Entered value does not match email format',
-                  },
-                }}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input {...field} type="email" />
-                    </FormControl>
-                    <FormDescription />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={control}
-                rules={{ required: 'This field is required' }}
-                name="city"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>City</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormDescription />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={control}
-                rules={{ required: 'This field is required' }}
-                name="state"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Province/Municapality</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormDescription />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <div>
-                <FormField
-                  control={control}
-                  rules={{ required: 'This field is required' }}
-                  name="address"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Address</FormLabel>
-                      <FormControl>
-                        <Input {...field} />
-                      </FormControl>
-                      <FormDescription />
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="flex-1">
-          <h2 className="mb-4 text-lg font-semibold">Order Summary</h2>
-
-          <div className="rounded-md border border-gray-100 bg-white py-6 shadow-sm">
-            <div className="space-y-4 px-6">
+    <>
+      <h2 className="mb-4 font-bold sm:text-4xl">Shopping Cart</h2>
+      <div className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12">
+        <section className="lg:col-span-7">
+          <div className="">
+            <ul role="list" className="divide-y divide-gray-300 border-y border-gray-300">
               {store?.products.map(product => (
-                <CartProduct key={product.id} product={product} />
+                <CheckoutProduct key={product.id} product={product} />
               ))}
-            </div>
-
-            {store?.products.length > 0 && (
-              <div className="mt-10  sm:flex-col">
-                <div className="text-sm">
-                  <hr className="h-px w-full text-gray-100" />
-                  <div className="flex items-center px-6 py-4 font-light text-gray-400">
-                    <h4 className="flex-1">Subtotal</h4>
-                    <h4 className="font-medium text-black">₱{amountWithoutTax.toFixed(2)}</h4>
-                  </div>
-                  <div className="flex items-center px-6 py-4 font-light text-gray-400">
-                    <h4 className="flex-1">Shipping</h4>
-                    <h4 className="font-medium">--</h4>
-                  </div>
-
-                  <hr className="h-px w-full text-gray-100" />
-                  <div className="flex items-center px-6 py-4 font-light text-gray-400">
-                    <h4 className="flex-1">Total (PHP)</h4>
-                    <h4 className="font-semibold text-black">₱{amountWithoutTax}</h4>
-                  </div>
-                </div>
-                <div className="mt-8 px-6 text-right">
-                  <Button
-                    type="submit"
-                    size={'lg'}
-                    disabled={formState.isSubmitting}
-                    onClick={handleSubmit(handlePlaceOrder)}
-                  >
-                    {/* {isRedirecting && <CircularLoader />} */}
-                    Place Order
-                  </Button>
-                </div>
-              </div>
-            )}
+            </ul>
           </div>
         </section>
-      </Form>
-    </div>
+        <section className="mt-16 rounded-lg bg-gray-50 px-4 sm:px-6 lg:col-span-5 lg:mt-0 lg:p-8">
+          <h2 className="text-lg font-medium">Order summary</h2>
+          <div className="mt-6 divide-y divide-gray-300 text-gray-500">
+            <div className="flex items-center justify-between">
+              <dt className="text-sm">Subtotal</dt>
+              <dd className="text-sm font-medium text-black">₱{amountWithoutTax.toFixed(2)}</dd>
+            </div>
+            <div className="mt-4 flex items-center justify-between py-4">
+              <dt className="text-sm">Shipping fee</dt>
+              <dd className="text-sm font-medium text-black">---</dd>
+            </div>
+            {/* <div className="flex items-center justify-between py-4">
+              <dt className="text-sm">Tax estimate</dt>
+              <dd className="text-sm font-medium text-black">₱{taxAmount}</dd>
+            </div> */}
+            <div className="flex items-center justify-between py-4">
+              <dt className="text-black">Order total</dt>
+              <dd className="font-medium text-black">₱{amountWithoutTax.toFixed(2)}</dd>
+            </div>
+          </div>
+          <div>
+            <Button size={'full'} className="h-12 rounded-md text-base" onClick={handlePlaceOrder}>
+              Place order
+            </Button>
+          </div>
+        </section>
+      </div>
+    </>
   );
 };

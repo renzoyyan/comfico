@@ -19,6 +19,7 @@ type CartActions = {
   handleCartClose: () => void;
   handleAddProductToCart: (product: Product) => void;
   handleRemoveProductFromCart: (product: Product) => void;
+  handleRemoveAll: () => void;
   setHasHydrated: (state: boolean) => void;
 };
 
@@ -77,6 +78,13 @@ export const useCartStore = create(
           products: state.products.filter(item => item.id !== product.id),
           // totalAmount: state.totalAmount - product.price * product.qty,
           totalProducts: state.totalProducts - 1,
+        }));
+      },
+
+      handleRemoveAll: () => {
+        set(state => ({
+          products: [],
+          totalProducts: 0,
         }));
       },
 

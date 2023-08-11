@@ -30,16 +30,19 @@
   .icon-sm {
     @apply h-5 w-5;
   }
+  .icon-xs {
+    @apply h-4 w-4;
+  }
 
   .section-heading {
     @apply font-playfair-display text-4xl font-semibold xl:text-[3.5rem];
   }
 
   .thumbnail .keen-slider__slide {
-    @apply mt-6 h-[150px] cursor-pointer;
+    @apply mt-6 h-full cursor-pointer;
   }
 
   .thumbnail .keen-slider__slide.active {
-    @apply border-2 border-brand-1;
+    @apply rounded-lg border-2 border-brand-1;
   }
 }

@@ -7,3 +7,5 @@ export * from './components/collections';
 export * from './components/collections-loader';
 export * from './components/checkout-form';
 export * from './components/product-slider';
+export * from './components/product-info';
+export * from './components/checkout-product';

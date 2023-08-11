@@ -34,9 +34,7 @@ export const Navbar = () => {
       )}
     >
       <div className="container flex items-center justify-between">
-        <Link href={ROUTES.HOME}>
-          <Logo />
-        </Link>
+        <Logo />
 
         <nav className="hidden space-x-14 lg:block">
           {navbarLinks.map(item => (

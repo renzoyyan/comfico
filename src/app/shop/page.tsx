@@ -12,7 +12,7 @@ const Shop = async ({
 }) => {
   const min_price = searchParams?.min_price ? Number(searchParams.min_price) : 0;
   const max_price = searchParams?.max_price ? Number(searchParams.max_price) : 15000;
-  const category_id = searchParams?.category_id ? searchParams?.category_id : '';
+  const category_id = searchParams?.category_id ? searchParams?.category_id : 'all';
   const PARAMS = { min_price, max_price, category_id };
 
   const { data: products } = await getProducts(PARAMS);
