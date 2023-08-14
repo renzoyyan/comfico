@@ -1,5 +1,5 @@
 import { Playfair_Display, Source_Sans_3 } from 'next/font/google';
-import { Toaster } from '@/shared/ui/toaster';
+import { Toaster } from '@/shared/components/ui/toaster';
 import { Toaster as RHToaster } from 'react-hot-toast';
 import { cn } from '@/shared/utils/commons';
 import { NextAuthProvider } from '@/shared/layout';

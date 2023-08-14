@@ -1,6 +1,6 @@
 import { ProductLoader } from '@/modules/home';
 import { PageLayout } from '@/shared/layout';
-import { Skeleton } from '@/shared/ui/skeleton';
+import { Skeleton } from '@/shared/components/ui/skeleton';
 import React from 'react';
 
 const Loading = () => {

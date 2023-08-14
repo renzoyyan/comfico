@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import React from 'react';
 
-import { Button, ButtonProps } from '../../../shared/ui/button';
+import { Button, ButtonProps } from '../../../shared/components/ui/button';
 import WhiteChair from '@/shared/assets/images/white-chair.jpg';
 import { cn } from '../../../shared/utils/commons';
 import { useCartStore } from '../../../shared/store/cart';
@@ -47,7 +47,7 @@ export const ProductCard = (props: Props) => {
       </Link>
 
       <div className="mt-4">
-        <div className="flex items-center justify-between">
+        <div className="flex justify-between">
           <h3 className="text-xl font-semibold xl:text-2xl">{product?.name}</h3>
           <h4 className="text-base font-semibold ">₱{product?.price.toFixed(2)}</h4>
         </div>

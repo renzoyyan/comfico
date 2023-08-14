@@ -7,28 +7,40 @@ import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
-import { Button, buttonVariants } from '@/shared/ui/button';
-import { Input } from '@/shared/ui/input';
+import { Button, buttonVariants } from '@/shared/components/ui/button';
+import { Input } from '@/shared/components/ui/input';
 import { ROUTES } from '@/shared/constants/routes';
-import { CircularLoader } from '@/shared/ui/circular-loader';
+import { CircularLoader } from '@/shared/components/ui/circular-loader';
 import { TLogin, TRegister } from '../types';
 import { LoginSchema, RegisterSchema } from '../validations';
 
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/shared/ui/form';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/shared/components/ui/form';
 import { sleep } from '@/shared/utils/commons';
-import { ErrorMessage } from '@/shared/ui/error-message';
-import { Logo } from '@/shared/ui/partials';
+import { ErrorMessage } from '@/shared/components/ui/error-message';
+import { Logo } from '@/shared/components/partials';
 import api from '@/shared/utils/api';
+import { LocalStorageUtil } from '@/shared/utils/local-storage';
+import { useCartStore } from '@/shared/store/cart';
 
 export const Register = () => {
   const [errorMessage, setErrorMessage] = useState('');
 
+  const products = useCartStore(state => state.products);
   const router = useRouter();
   const form = useForm<TRegister>({ resolver: zodResolver(RegisterSchema) });
 
   const { handleSubmit, control, formState } = form;
 
   const handleRegister = async (payload: TRegister) => {
+    const cartCallbackUrl = LocalStorageUtil.get('cart-callback-url');
+
     try {
       const { data } = await api.post('/api/auth/register', payload);
 
@@ -38,16 +50,17 @@ export const Register = () => {
 
       const error = res?.error;
 
-      if (!error) {
-        setErrorMessage('');
-        router.replace(ROUTES.HOME);
-        await sleep(6000);
+      if (error) return setErrorMessage(error);
 
-        return res;
-      }
+      setErrorMessage('');
 
-      setErrorMessage(error);
-      return;
+      cartCallbackUrl && products.length > 0
+        ? router.replace(ROUTES.CART)
+        : router.replace(ROUTES.HOME);
+
+      await sleep();
+
+      return res;
     } catch (error: any) {
       setErrorMessage(error?.response?.data);
     }

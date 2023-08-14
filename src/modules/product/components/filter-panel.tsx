@@ -1,4 +1,4 @@
-import { Button } from '@/shared/ui/button';
+import { Button } from '@/shared/components/ui/button';
 import {
   Sheet,
   SheetClose,
@@ -8,7 +8,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '@/shared/ui/sheet';
+} from '@/shared/components/ui/sheet';
 import { Filter as FilterIcon } from 'lucide-react';
 import React from 'react';
 import { Filter } from './filter';

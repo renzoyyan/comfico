@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/shared/ui/button';
+import { Button } from '@/shared/components/ui/button';
 import { ShoppingCart } from 'lucide-react';
 import { Star, StarHalf } from 'lucide-react';
 import { ProductSliderProps } from './product-slider';

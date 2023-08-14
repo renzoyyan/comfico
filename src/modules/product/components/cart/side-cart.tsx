@@ -1,4 +1,5 @@
 'use client';
+
 import { ShoppingBag, ShoppingCart, X } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -12,15 +13,16 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '@/shared/ui/sheet';
-import { Button, buttonVariants } from '@/shared/ui/button';
+} from '@/shared/components/ui/sheet';
+import { Button, buttonVariants } from '@/shared/components/ui/button';
 import { CartProduct } from './cart-product';
 import { useCartStore } from '@/shared/store/cart';
 import { useStore } from '@/shared/hooks/use-store';
 import { ROUTES } from '@/shared/constants/routes';
 import { sleep } from '@/shared/utils/commons';
-import { CircularLoader } from '@/shared/ui/circular-loader';
+import { CircularLoader } from '@/shared/components/ui/circular-loader';
 import { useAuth } from '@/shared/hooks/use-auth';
+import { LocalStorageUtil } from '@/shared/utils/local-storage';
 
 export const SideCart = () => {
   const [isRedirecting, setIsRedirecting] = useState(false);
@@ -29,7 +31,12 @@ export const SideCart = () => {
   const { user } = useAuth();
 
   if (!store?._hasHydrated) {
-    return null;
+    return (
+      <div className="flex items-center gap-x-1.5">
+        <ShoppingCart className="icon-sm" />
+        <span>Cart</span>
+      </div>
+    );
   }
 
   const amountWithoutTax = store.products.reduce((acc, item) => acc + item.qty * item.price, 0);
@@ -40,7 +47,7 @@ export const SideCart = () => {
   const handleCheckout = () => {
     setIsRedirecting(true);
     if (!user) {
-      localStorage.setItem('callbackUrl', ROUTES.CART);
+      LocalStorageUtil.set('cart-callback-url', ROUTES.CART);
       return router.push(ROUTES.LOGIN);
     }
     sleep();

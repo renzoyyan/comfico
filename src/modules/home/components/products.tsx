@@ -1,4 +1,4 @@
-import { Button } from '@/shared/ui/button';
+import { Button } from '@/shared/components/ui/button';
 import { ProductCard } from '@/modules/product';
 import React from 'react';
 import { getProducts } from '@/modules/product/services';

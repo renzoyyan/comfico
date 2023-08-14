@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/shared/ui/button';
+import { Button } from '@/shared/components/ui/button';
 import {
   Form,
   FormControl,
@@ -8,8 +8,8 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from '@/shared/ui/form';
-import { Input } from '@/shared/ui/input';
+} from '@/shared/components/ui/form';
+import { Input } from '@/shared/components/ui/input';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 

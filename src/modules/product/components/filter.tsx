@@ -3,13 +3,20 @@
 import { useForm, FieldValues } from 'react-hook-form';
 import { usePathname, useRouter } from 'next/navigation';
 
-import { Button } from '@/shared/ui/button';
-import { Input } from '@/shared/ui/input';
-import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group';
+import { Button } from '@/shared/components/ui/button';
+import { Input } from '@/shared/components/ui/input';
+import { RadioGroup, RadioGroupItem } from '@/shared/components/ui/radio-group';
 import { Category } from '../types';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/shared/ui/form';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/shared/components/ui/form';
 import { cn, sleep } from '@/shared/utils/commons';
-import { CircularLoader } from '@/shared/ui/circular-loader';
+import { CircularLoader } from '@/shared/components/ui/circular-loader';
 
 type Props = {
   categories: Category[];

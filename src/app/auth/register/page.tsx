@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
 import { Register } from '@/modules/auth';
-import { Logo } from '@/shared/ui/partials';
+import { Logo } from '@/shared/components/partials';
 import HeroImg from '@/shared/assets/images/hero-image.jpg';
 
 const RegisterPage = () => {

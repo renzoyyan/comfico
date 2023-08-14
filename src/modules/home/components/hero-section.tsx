@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import HeroImg from '@/shared/assets/images/hero-image.jpg';
-import { Button } from '@/shared/ui/button';
+import { Button } from '@/shared/components/ui/button';
 
 export const HeroSection = () => {
   return (
@@ -8,7 +8,7 @@ export const HeroSection = () => {
       <div className="mx-auto h-full max-w-[1530px] lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8">
         <div className="items-center px-8 pb-24 pt-36 sm:pb-32 sm:pt-48 lg:col-span-7 lg:mr-4 lg:flex lg:h-full lg:px-0 lg:py-0 xl:col-span-6 xl:mr-0 xl:py-0">
           <div className="mx-auto max-w-[43rem] lg:mx-0">
-            <h1 className="font-playfair-display text-4xl font-medium leading-snug sm:text-6xl xl:text-[5rem] xl:leading-[6rem]">
+            <h1 className="font-playfair-display text-4xl font-semibold leading-snug sm:text-6xl xl:text-[5rem] xl:leading-[6rem]">
               Elevate Your Space with Timeless Style.
             </h1>
 

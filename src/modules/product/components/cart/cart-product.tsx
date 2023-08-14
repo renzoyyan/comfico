@@ -2,9 +2,9 @@ import Image from 'next/image';
 import { Minus, Plus, Truck } from 'lucide-react';
 
 import Sofa from '@/shared/assets/images/sofa-gray.jpg';
-import { Badge } from '@/shared/ui/badge';
-import { Button } from '@/shared/ui/button';
-import { Input } from '@/shared/ui/input';
+import { Badge } from '@/shared/components/ui/badge';
+import { Button } from '@/shared/components/ui/button';
+import { Input } from '@/shared/components/ui/input';
 import { type Product, useCartStore } from '@/shared/store/cart';
 
 type Props = {
@@ -80,7 +80,7 @@ export const CartProduct = ({ product }: Props) => {
               size={'icon'}
               className="h-8 rounded-md border border-gray-200 bg-white shadow-sm hover:bg-gray-50"
               onClick={() => increaseQty(product)}
-              disabled={product.stock === 0 || product.stock > product.qty}
+              disabled={product.stock === 0 || product.qty > product.stock}
             >
               <Plus className="h-4 w-4 text-gray-500" />
             </Button>

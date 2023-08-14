@@ -1,6 +1,6 @@
 import { Product, useCartStore } from '@/shared/store/cart';
-import { Button } from '@/shared/ui/button';
-import { Input } from '@/shared/ui/input';
+import { Button } from '@/shared/components/ui/button';
+import { Input } from '@/shared/components/ui/input';
 import { Minus, Plus, X } from 'lucide-react';
 import Image from 'next/image';
 
@@ -94,7 +94,7 @@ export const CheckoutProduct = ({ product }: Props) => {
                 <Button
                   variant={'ghost'}
                   onClick={() => handleRemoveProductFromCart(product)}
-                  className="h-full py-0"
+                  className="h-full py-0 pr-0"
                 >
                   <X className="icon-sm text-gray-400" />
                 </Button>

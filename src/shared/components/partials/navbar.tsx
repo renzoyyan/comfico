@@ -2,18 +2,21 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { usePathname, useSelectedLayoutSegment } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 import { Logo } from './logo';
 import { cn } from '@/shared/utils/commons';
-import { Button } from '../button';
+import { buttonVariants } from '../ui/button';
 import { SideCart } from '@/modules/product';
 import { navbarLinks } from '@/shared/constants/links';
+import { useAuth } from '@/shared/hooks/use-auth';
 import { ROUTES } from '@/shared/constants/routes';
+import { UserNav } from './user-nav';
 
 export const Navbar = () => {
   const [offset, setOffset] = React.useState(false);
   const pathname = usePathname();
+  const { user } = useAuth();
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -51,15 +54,16 @@ export const Navbar = () => {
         <div className="flex items-center gap-x-3.5">
           <SideCart />
 
-          {/* IF SIGNED IN */}
-          {/* <div className="flex items-center gap-x-1.5">
-            <User2 className="icon-sm" />
-            <span>Account</span>
-          </div> */}
-
-          <Button variant={'outline'} className="bg-transparent">
-            Sign in
-          </Button>
+          {user ? (
+            <UserNav user={user} />
+          ) : (
+            <Link
+              href={ROUTES.LOGIN}
+              className={buttonVariants({ variant: 'outline', className: 'bg-transparent' })}
+            >
+              Sign in
+            </Link>
+          )}
         </div>
       </div>
     </header>

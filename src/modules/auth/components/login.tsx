@@ -7,41 +7,50 @@ import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
-import { Button, buttonVariants } from '@/shared/ui/button';
-import { Input } from '@/shared/ui/input';
+import { Button, buttonVariants } from '@/shared/components/ui/button';
+import { Input } from '@/shared/components/ui/input';
 import { ROUTES } from '@/shared/constants/routes';
-import { CircularLoader } from '@/shared/ui/circular-loader';
+import { CircularLoader } from '@/shared/components/ui/circular-loader';
 import { TLogin } from '../types';
 import { LoginSchema } from '../validations';
 
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/shared/ui/form';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/shared/components/ui/form';
 import { sleep } from '@/shared/utils/commons';
-import { ErrorMessage } from '@/shared/ui/error-message';
-import { Logo } from '@/shared/ui/partials';
+import { ErrorMessage } from '@/shared/components/ui/error-message';
+import { LocalStorageUtil } from '@/shared/utils/local-storage';
+import { useCartStore } from '@/shared/store/cart';
 
 export const Login = () => {
   const [errorMessage, setErrorMessage] = useState('');
 
+  const products = useCartStore(state => state.products);
   const router = useRouter();
   const form = useForm<TLogin>({ resolver: zodResolver(LoginSchema) });
 
   const { handleSubmit, control, formState } = form;
 
   const handleSignIn = async (payload: TLogin) => {
+    const cartCallbackUrl = LocalStorageUtil.get('cart-callback-url');
     const res = await signIn('credentials', { redirect: false, ...payload });
 
     const error = res?.error;
 
-    if (!error) {
-      setErrorMessage('');
-      router.replace(ROUTES.HOME);
-      await sleep(6000);
+    if (error) return setErrorMessage(error);
 
-      return res;
-    }
+    setErrorMessage('');
 
-    setErrorMessage(error);
-    return;
+    cartCallbackUrl && products.length > 0 ? router.push(ROUTES.CART) : router.push(ROUTES.HOME);
+
+    await sleep(6000);
+
+    return res;
   };
 
   return (

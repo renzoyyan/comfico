@@ -1,5 +1,5 @@
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/shared/ui/form';
-import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/shared/components/ui/form';
+import { RadioGroup, RadioGroupItem } from '@/shared/components/ui/radio-group';
 import { Control } from 'react-hook-form';
 import { getCategories } from '../services';
 

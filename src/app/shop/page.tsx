@@ -1,7 +1,7 @@
 import { Filter, ProductCard } from '@/modules/product';
 import { getCategories, getProducts } from '@/modules/product/services';
 import { PageLayout } from '@/shared/layout';
-import { Input } from '@/shared/ui/input';
+import { Input } from '@/shared/components/ui/input';
 
 export const revalidate = 300;
 

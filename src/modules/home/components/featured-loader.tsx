@@ -1,4 +1,4 @@
-import { Skeleton } from '@/shared/ui/skeleton';
+import { Skeleton } from '@/shared/components/ui/skeleton';
 import { ProductLoader } from './product-loader';
 
 export const FeaturedLoader = () => {

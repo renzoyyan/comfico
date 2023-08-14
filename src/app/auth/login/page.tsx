@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import HeroImg from '@/shared/assets/images/hero-image.jpg';
 import { Login } from '@/modules/auth';
-import { Logo } from '@/shared/ui/partials';
+import { Logo } from '@/shared/components/partials';
 
 const LoginPage = () => {
   return (
