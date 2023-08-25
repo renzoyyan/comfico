@@ -1,14 +1,14 @@
 'use client';
 
-import { useAuth } from '@/shared/hooks/use-auth';
-import { useCartStore } from '@/shared/store/cart';
 import { Button } from '@/shared/components/ui/button';
 import { CircularLoader } from '@/shared/components/ui/circular-loader';
-import api from '@/shared/utils/api';
+import { useAuth } from '@/shared/hooks/use-auth';
+import { useCartStore } from '@/shared/store/cart';
 import { LocalStorageUtil } from '@/shared/utils/local-storage';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
+import { checkout } from '../services';
 
 export const CheckoutSummary = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -34,10 +34,8 @@ export const CheckoutSummary = () => {
     if (!user) return;
 
     setIsSubmitting(true);
-    const response = await api.post('/api/checkout', {
-      products: products,
-      user_id: user.id,
-    });
+
+    const response = await checkout({ products, user_id: user.id });
 
     window.location = response.data.url;
 

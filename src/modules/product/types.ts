@@ -1,5 +1,3 @@
-import { StaticImageData } from 'next/image';
-
 export enum ProductCategory {
   SOFA = 'SOFA',
   CHAIR = 'CHAIR',
@@ -48,3 +46,5 @@ export type Category = {
   created_at: string;
   updated_at: string;
 };
+
+export type CheckoutPayload = { products: Product[]; user_id: string };

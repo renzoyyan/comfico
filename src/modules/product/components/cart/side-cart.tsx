@@ -5,6 +5,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import { Button, buttonVariants } from '@/shared/components/ui/button';
+import { CircularLoader } from '@/shared/components/ui/circular-loader';
+import { ScrollArea } from '@/shared/components/ui/scroll-area';
 import {
   Sheet,
   SheetClose,
@@ -14,15 +17,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/shared/components/ui/sheet';
-import { Button, buttonVariants } from '@/shared/components/ui/button';
-import { CartProduct } from './cart-product';
-import { useCartStore } from '@/shared/store/cart';
-import { useStore } from '@/shared/hooks/use-store';
 import { ROUTES } from '@/shared/constants/routes';
-import { sleep } from '@/shared/utils/commons';
-import { CircularLoader } from '@/shared/components/ui/circular-loader';
 import { useAuth } from '@/shared/hooks/use-auth';
+import { useStore } from '@/shared/hooks/use-store';
+import { useCartStore } from '@/shared/store/cart';
+import { sleep } from '@/shared/utils/commons';
 import { LocalStorageUtil } from '@/shared/utils/local-storage';
+import { CartProduct } from './cart-product';
 
 export const SideCart = () => {
   const [isRedirecting, setIsRedirecting] = useState(false);
@@ -71,68 +72,74 @@ export const SideCart = () => {
         </div>
       </SheetTrigger>
       <SheetContent hideCloseBtn className="w-full px-0 lg:max-w-md">
-        <SheetHeader className="mb-4 flex flex-row items-center justify-between px-6">
-          <SheetTitle>Your Cart</SheetTitle>
-          <SheetClose asChild>
-            <Button variant={'ghost'} size={'icon'} className="!mt-0">
-              <X className="icon-default text-gray-600" />
-            </Button>
-          </SheetClose>
-        </SheetHeader>
+        <ScrollArea className="h-[900px]">
+          <SheetHeader className="mb-4 flex flex-row items-center justify-between px-6">
+            <SheetTitle>Your Cart</SheetTitle>
+            <SheetClose asChild>
+              <Button variant={'ghost'} size={'icon'} className="!mt-0">
+                <X className="icon-default text-gray-600" />
+              </Button>
+            </SheetClose>
+          </SheetHeader>
 
-        {/* CART PRODUCTS */}
-        <div className="space-y-4 px-6">
-          {store?.products?.length > 0 ? (
-            store?.products.map(product => <CartProduct key={product.id} product={product} />)
-          ) : (
-            <div className=" grid h-screen place-content-center gap-y-4 text-center text-brand-1">
-              <ShoppingBag className="mx-auto h-8 w-8" />
-              <h3 className="text-xl font-medium">Your cart is empty</h3>
+          {/* CART PRODUCTS */}
+          <div className="space-y-4 px-6">
+            {store?.products?.length > 0 ? (
+              store?.products.map(product => <CartProduct key={product.id} product={product} />)
+            ) : (
+              <div className=" grid h-screen place-content-center gap-y-4 text-center text-brand-1">
+                <ShoppingBag className="mx-auto h-8 w-8" />
+                <h3 className="text-xl font-medium">Your cart is empty</h3>
 
-              <SheetClose asChild>
-                <Link
-                  href={ROUTES.SHOP}
-                  className={buttonVariants({ variant: 'outline', size: 'lg', className: 'mb-36' })}
-                >
-                  Start shopping
-                </Link>
-              </SheetClose>
-            </div>
-          )}
-        </div>
-        {/* END CART PRODUCTS */}
-
-        {store?.products.length > 0 && (
-          <SheetFooter className="mt-10 sm:flex-col">
-            <div className="text-sm">
-              <hr className="h-px w-full text-gray-100" />
-              <div className="flex items-center px-6 py-4 font-light text-gray-400">
-                <h4 className="flex-1">Subtotal</h4>
-                <h4 className="font-medium text-black">₱{amountWithoutTax.toFixed(2)}</h4>
+                <SheetClose asChild>
+                  <Link
+                    href={ROUTES.SHOP}
+                    className={buttonVariants({
+                      variant: 'outline',
+                      size: 'lg',
+                      className: 'mb-36',
+                    })}
+                  >
+                    Start shopping
+                  </Link>
+                </SheetClose>
               </div>
-              <div className="flex items-center px-6 py-4 font-light text-gray-400">
-                <h4 className="flex-1">Shipping</h4>
-                <h4 className="font-medium">--</h4>
-              </div>
-              {/* <div className="flex items-center px-6 py-4 font-light text-gray-400">
+            )}
+          </div>
+          {/* END CART PRODUCTS */}
+
+          {store?.products.length > 0 && (
+            <SheetFooter className="mt-10 pb-6 sm:flex-col">
+              <div className="text-sm">
+                <hr className="h-px w-full text-gray-100" />
+                <div className="flex items-center px-6 py-4 font-light text-gray-400">
+                  <h4 className="flex-1">Subtotal</h4>
+                  <h4 className="font-medium text-black">₱{amountWithoutTax.toFixed(2)}</h4>
+                </div>
+                <div className="flex items-center px-6 py-4 font-light text-gray-400">
+                  <h4 className="flex-1">Shipping</h4>
+                  <h4 className="font-medium">--</h4>
+                </div>
+                {/* <div className="flex items-center px-6 py-4 font-light text-gray-400">
                 <h4 className="flex-1">Tax</h4>
                 <h4 className="font-medium">₱{taxAmount}</h4>
               </div> */}
 
-              <hr className="h-px w-full text-gray-100" />
-              <div className="flex items-center px-6 py-4 font-light text-gray-400">
-                <h4 className="flex-1">Total (PHP)</h4>
-                <h4 className="font-semibold text-black">₱{amountWithoutTax}</h4>
+                <hr className="h-px w-full text-gray-100" />
+                <div className="flex items-center px-6 py-4 font-light text-gray-400">
+                  <h4 className="flex-1">Total (PHP)</h4>
+                  <h4 className="font-semibold text-black">₱{amountWithoutTax}</h4>
+                </div>
               </div>
-            </div>
-            <div className="mt-8 px-6 text-right">
-              <Button type="button" size={'lg'} disabled={isRedirecting} onClick={handleCheckout}>
-                {isRedirecting && <CircularLoader />}
-                Checkout
-              </Button>
-            </div>
-          </SheetFooter>
-        )}
+              <div className="mt-8 px-6 text-right">
+                <Button type="button" size={'lg'} disabled={isRedirecting} onClick={handleCheckout}>
+                  {isRedirecting && <CircularLoader />}
+                  Checkout
+                </Button>
+              </div>
+            </SheetFooter>
+          )}
+        </ScrollArea>
       </SheetContent>
     </Sheet>
   );

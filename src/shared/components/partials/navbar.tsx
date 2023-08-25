@@ -1,16 +1,16 @@
 'use client';
 
-import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import React from 'react';
 
-import { Logo } from './logo';
-import { cn } from '@/shared/utils/commons';
-import { buttonVariants } from '../ui/button';
 import { SideCart } from '@/modules/product';
 import { navbarLinks } from '@/shared/constants/links';
-import { useAuth } from '@/shared/hooks/use-auth';
 import { ROUTES } from '@/shared/constants/routes';
+import { useAuth } from '@/shared/hooks/use-auth';
+import { cn } from '@/shared/utils/commons';
+import { buttonVariants } from '../ui/button';
+import { Logo } from './logo';
 import { UserNav } from './user-nav';
 
 export const Navbar = () => {
@@ -59,7 +59,7 @@ export const Navbar = () => {
           ) : (
             <Link
               href={ROUTES.LOGIN}
-              className={buttonVariants({ variant: 'outline', className: 'bg-transparent' })}
+              className={buttonVariants({ variant: 'outline', className: '!bg-transparent' })}
             >
               Sign in
             </Link>

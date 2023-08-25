@@ -1,4 +1,5 @@
-import { type ClassValue, clsx } from 'clsx';
+import { clsx, type ClassValue } from 'clsx';
+import dayjs from 'dayjs';
 import { twMerge } from 'tailwind-merge';
 import api from './api';
 
@@ -11,3 +12,7 @@ export function sleep(delay = 2000) {
 }
 
 export const fetcher = (url: string) => api(url).then(res => res.data);
+
+export const formatDate = (date: string | Date, desiredFormat?: string) => {
+  return date ? dayjs(date).format(desiredFormat || 'DD/MM/YYYY') : '';
+};

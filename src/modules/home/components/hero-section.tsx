@@ -1,6 +1,8 @@
-import Image from 'next/image';
 import HeroImg from '@/shared/assets/images/hero-image.jpg';
-import { Button } from '@/shared/components/ui/button';
+import { buttonVariants } from '@/shared/components/ui/button';
+import { ROUTES } from '@/shared/constants/routes';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export const HeroSection = () => {
   return (
@@ -17,7 +19,9 @@ export const HeroSection = () => {
               Relaxation and Serenity.
             </p>
 
-            <Button size="lg">Buy now</Button>
+            <Link href={ROUTES.SHOP} className={buttonVariants({ size: 'lg' })}>
+              Buy now
+            </Link>
           </div>
         </div>
         <div className="relative lg:col-span-5 lg:-mr-8 xl:absolute xl:inset-0 xl:left-1/2 xl:mr-0">
