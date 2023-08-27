@@ -1,11 +1,11 @@
-import Image from 'next/image';
-import HeroImg from '@/shared/assets/images/hero-image.jpg';
 import { Login } from '@/modules/auth';
+import HeroImg from '@/shared/assets/images/hero-image.jpg';
 import { Logo } from '@/shared/components/partials';
+import Image from 'next/image';
 
 const LoginPage = () => {
   return (
-    <section className="grid h-screen grid-cols-2">
+    <section className="grid h-screen md:grid-cols-2">
       <div className="flex flex-col">
         <div className="ml-[3vw] mt-6">
           <Logo />
@@ -14,7 +14,7 @@ const LoginPage = () => {
           <Login />
         </div>
       </div>
-      <div className="relative h-full w-full">
+      <div className="relative hidden h-full w-full md:block">
         <Image
           src={HeroImg}
           fill

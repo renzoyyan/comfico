@@ -35,7 +35,7 @@
   }
 
   .section-heading {
-    @apply font-playfair-display text-4xl font-semibold xl:text-[3.5rem];
+    @apply font-playfair-display font-semibold sm:text-4xl xl:text-[3.5rem];
   }
 
   .thumbnail .keen-slider__slide {

@@ -1,4 +1,3 @@
-import React from 'react';
 import { services } from '../constants';
 
 export const Services = () => {
@@ -6,7 +5,7 @@ export const Services = () => {
     <section className="relative lg:h-screen">
       <div className="container grid h-full items-center py-36 sm:py-56">
         <div>
-          <h2 className="section-heading max-w-[977px] leading-[3rem] xl:leading-[4.5rem]">
+          <h2 className="section-heading max-w-[977px] text-[2rem] leading-[3rem] xl:leading-[4.5rem]">
             We are committed to ensuring exceptional customer experiences
           </h2>
 

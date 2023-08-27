@@ -1,5 +1,4 @@
 import { Skeleton } from '@/shared/components/ui/skeleton';
-import React from 'react';
 
 type Props = {
   length?: number;

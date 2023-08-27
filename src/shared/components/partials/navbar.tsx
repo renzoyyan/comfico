@@ -9,12 +9,15 @@ import { navbarLinks } from '@/shared/constants/links';
 import { ROUTES } from '@/shared/constants/routes';
 import { useAuth } from '@/shared/hooks/use-auth';
 import { cn } from '@/shared/utils/commons';
+import { Menu, ShoppingCart } from 'lucide-react';
 import { buttonVariants } from '../ui/button';
+import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
 import { Logo } from './logo';
 import { UserNav } from './user-nav';
 
 export const Navbar = () => {
   const [offset, setOffset] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
   const pathname = usePathname();
   const { user } = useAuth();
 
@@ -39,7 +42,7 @@ export const Navbar = () => {
       <div className="container flex items-center justify-between">
         <Logo />
 
-        <nav className="hidden space-x-14 lg:block">
+        <nav className="hidden sm:block sm:space-x-6 lg:space-x-14">
           {navbarLinks.map(item => (
             <Link
               href={item.href}
@@ -51,7 +54,7 @@ export const Navbar = () => {
           ))}
         </nav>
 
-        <div className="flex items-center gap-x-3.5">
+        <div className="hidden sm:flex sm:items-center sm:gap-x-3.5">
           <SideCart />
 
           {user ? (
@@ -64,6 +67,45 @@ export const Navbar = () => {
               Sign in
             </Link>
           )}
+        </div>
+
+        <div className="sm:hidden">
+          <Sheet>
+            <SheetTrigger>
+              <Menu className="icon-xs" />
+            </SheetTrigger>
+            <SheetContent className="w-[280px] pt-16">
+              <div className="flex flex-col gap-y-4">
+                {navbarLinks.map(item => (
+                  <Link href={item.href} key={item.label}>
+                    <span
+                      className={cn(
+                        'text-xl',
+                        pathname.includes(item.path) && 'font-semibold text-brand-2'
+                      )}
+                    >
+                      {item.label}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+
+              <div className="mt-4 flex flex-col gap-y-5 text-xl">
+                <Link href={ROUTES.CART} className="flex items-center gap-x-1.5">
+                  <ShoppingCart className="icon-sm" />
+                  <span>Cart</span>
+                </Link>
+
+                {user ? (
+                  <Link href={ROUTES.MY_ORDERS}>My orders</Link>
+                ) : (
+                  <Link href={ROUTES.LOGIN} className={buttonVariants()}>
+                    Sign in
+                  </Link>
+                )}
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </header>
