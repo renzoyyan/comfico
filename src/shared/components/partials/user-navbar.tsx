@@ -1,11 +1,10 @@
 'use client';
 
-import React from 'react';
-import { Logo } from './logo';
-import Link from 'next/link';
-import { Button } from '../ui/button';
 import { LogOut } from 'lucide-react';
 import { signOut } from 'next-auth/react';
+import Link from 'next/link';
+import { Button, buttonVariants } from '../ui/button';
+import { Logo } from './logo';
 
 export const UserNavbar = () => {
   return (
@@ -14,23 +13,19 @@ export const UserNavbar = () => {
         <div className="flex items-center gap-x-4">
           <Logo />
 
-          <nav className="flex items-center gap-x-2">
-            <Link href={'/my-orders'}>
-              <Button variant={'ghost'} className="text-base">
-                My orders
-              </Button>
+          <nav className="flex items-center">
+            <Link href={'/my-orders'} className={buttonVariants({ variant: 'ghost' })}>
+              My orders
             </Link>
-            <Link href={'/cart'}>
-              <Button variant={'ghost'} className="text-base">
-                Cart
-              </Button>
+            <Link href={'/cart'} className={buttonVariants({ variant: 'ghost' })}>
+              Cart
             </Link>
           </nav>
         </div>
 
         <Button variant={'ghost'} className="text-red-500" onClick={() => signOut()}>
           <LogOut className="icon-xs mr-2" />
-          Logout
+          <span className="hidden sm:inline-block">Logout</span>
         </Button>
       </div>
     </header>

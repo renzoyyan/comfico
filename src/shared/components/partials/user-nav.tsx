@@ -1,10 +1,12 @@
-import React from 'react';
-import router from 'next/router';
 import { startCase } from 'lodash';
-import { Session } from 'next-auth';
 import { LogOut, ShoppingBag } from 'lucide-react';
+import { Session } from 'next-auth';
 import { signOut } from 'next-auth/react';
 
+import { ROUTES } from '@/shared/constants/routes';
+import Link from 'next/link';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { Button } from '../ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,10 +16,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
-import { Button } from '../ui/button';
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import { ROUTES } from '@/shared/constants/routes';
-import Link from 'next/link';
 
 export const UserNav = ({ user }: { user: Session['user'] }) => {
   const name = `${user?.first_name} ${user?.last_name}`;
@@ -32,7 +30,7 @@ export const UserNav = ({ user }: { user: Session['user'] }) => {
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56" align="end" forceMount>
+      <DropdownMenuContent className="hidden w-56 sm:block" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">{startCase(name)}</p>

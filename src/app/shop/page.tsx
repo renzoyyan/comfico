@@ -1,19 +1,26 @@
-import { Filter, ProductCard } from '@/modules/product';
+import { Filter, ProductCard, Search } from '@/modules/product';
 import { getCategories, getProducts } from '@/modules/product/services';
+import { buttonVariants } from '@/shared/components/ui/button';
+import { ROUTES } from '@/shared/constants/routes';
 import { PageLayout } from '@/shared/layout';
-import { Input } from '@/shared/components/ui/input';
-
-export const revalidate = 300;
+import { cn } from '@/shared/utils/commons';
+import Link from 'next/link';
 
 const Shop = async ({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
-  const min_price = searchParams?.min_price ? Number(searchParams.min_price) : 0;
-  const max_price = searchParams?.max_price ? Number(searchParams.max_price) : 15000;
-  const category_id = searchParams?.category_id ? searchParams?.category_id : 'all';
-  const PARAMS = { min_price, max_price, category_id };
+  const page = typeof searchParams?.page === 'string' ? searchParams?.page : 1;
+  const search = typeof searchParams?.search === 'string' ? searchParams?.search : undefined;
+  const min_price =
+    typeof searchParams?.min_price === 'string' ? Number(searchParams.min_price) : 0;
+  const max_price =
+    typeof searchParams?.max_price === 'string' ? Number(searchParams.max_price) : 15000;
+  const category_id =
+    typeof searchParams?.category_id === 'string' ? searchParams?.category_id : 'all';
+
+  const PARAMS = { min_price, max_price, category_id, page, search };
 
   const { data: products } = await getProducts(PARAMS);
   const { data: categories } = await getCategories();
@@ -29,13 +36,51 @@ const Shop = async ({
 
             <div className="flex-[2] space-y-10">
               <div className="flex items-center gap-6 sm:grid sm:grid-cols-3">
-                <div className="flex-grow sm:col-span-2">
-                  <Input placeholder="Search products" />
+                <Search searchQuery={search} />
+                <div
+                  className={cn(
+                    'flex items-center justify-end gap-x-2',
+                    !products.nextPage && 'hidden'
+                  )}
+                >
+                  <Link
+                    href={{
+                      pathname: ROUTES.SHOP,
+                      query: {
+                        ...(search ? { search } : {}),
+                        page: products.prevPage,
+                      },
+                    }}
+                    className={buttonVariants({
+                      variant: 'outline',
+                      size: 'sm',
+                      className:
+                        !products.prevPage && 'pointer-events-none border-gray-300 text-gray-300',
+                    })}
+                  >
+                    Previous
+                  </Link>
+                  <Link
+                    href={{
+                      pathname: ROUTES.SHOP,
+                      query: {
+                        ...(search ? { search } : {}),
+                        page: products.nextPage,
+                      },
+                    }}
+                    className={buttonVariants({
+                      variant: 'outline',
+                      size: 'sm',
+                      className:
+                        !products.nextPage && 'pointer-events-none border-gray-300 text-gray-300',
+                    })}
+                  >
+                    Next
+                  </Link>
                 </div>
               </div>
-
               <div className="grid gap-6  sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3">
-                {products.map(product => (
+                {products.items.map(product => (
                   <ProductCard variant={'outline'} key={product.id} product={product} />
                 ))}
               </div>

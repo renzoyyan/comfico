@@ -1,7 +1,6 @@
 import { ProductLoader } from '@/modules/home';
-import { PageLayout } from '@/shared/layout';
 import { Skeleton } from '@/shared/components/ui/skeleton';
-import React from 'react';
+import { PageLayout } from '@/shared/layout';
 
 const Loading = () => {
   return (
@@ -35,14 +34,9 @@ const Loading = () => {
                 <div className="flex-grow sm:col-span-2">
                   <Skeleton className="h-12 w-full" />
                 </div>
-
-                <div className="justify-self-end lg:hidden">{/* <FilterPanel /> */}</div>
               </div>
 
               <div className="grid gap-6  sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3">
-                {/* {Array.from({ length: 6 }).map((product, idx) => (
-                  <Skeleton className="aspect-square h-full w-full" key={idx} />
-                ))} */}
                 <ProductLoader length={6} />
               </div>
             </div>

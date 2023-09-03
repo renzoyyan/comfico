@@ -21,7 +21,7 @@ const MyOrdersPage = async () => {
       <div className="container">
         <h1 className="mt-8 text-lg font-bold sm:text-2xl lg:text-3xl">My orders</h1>
 
-        <DataTable columns={columns} data={orders} />
+        <DataTable columns={columns} data={orders.items} />
       </div>
     </>
   );

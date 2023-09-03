@@ -1,7 +1,6 @@
 import { ROUTES } from '@/shared/constants/routes';
 import { cn } from '@/shared/utils/commons';
 import Link from 'next/link';
-import React from 'react';
 
 type Props = {
   className?: string;
@@ -9,7 +8,7 @@ type Props = {
 
 export const Logo = (props: Props) => {
   return (
-    <div className={cn('text-2xl font-bold text-brand-1', props.className)}>
+    <div className={cn('text-xl font-bold text-brand-1 sm:text-2xl', props.className)}>
       <Link href={ROUTES.HOME}>comfico</Link>
     </div>
   );

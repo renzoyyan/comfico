@@ -21,7 +21,7 @@ import { ROUTES } from '@/shared/constants/routes';
 import { useAuth } from '@/shared/hooks/use-auth';
 import { useStore } from '@/shared/hooks/use-store';
 import { useCartStore } from '@/shared/store/cart';
-import { sleep } from '@/shared/utils/commons';
+import { cn, sleep } from '@/shared/utils/commons';
 import { LocalStorageUtil } from '@/shared/utils/local-storage';
 import { CartProduct } from './cart-product';
 
@@ -35,7 +35,7 @@ export const SideCart = () => {
     return (
       <div className="flex items-center gap-x-1.5">
         <ShoppingCart className="icon-sm" />
-        <span>Cart</span>
+        <span className="hidden lg:inline-block">Cart</span>
       </div>
     );
   }
@@ -68,16 +68,16 @@ export const SideCart = () => {
             ) : null}
             <ShoppingCart className="icon-sm" />
           </div>
-          <span>Cart</span>
+          <span className="hidden lg:inline-block">Cart</span>
         </div>
       </SheetTrigger>
       <SheetContent hideCloseBtn className="w-full px-0 lg:max-w-md">
-        <ScrollArea className="h-[900px]">
-          <SheetHeader className="mb-4 flex flex-row items-center justify-between px-6">
+        <ScrollArea className={cn(store.products.length > 3 ? 'h-[900px]' : 'h-full')}>
+          <SheetHeader className="mb-4 flex flex-row items-center justify-between px-6 pt-2">
             <SheetTitle>Your Cart</SheetTitle>
             <SheetClose asChild>
               <Button variant={'ghost'} size={'icon'} className="!mt-0">
-                <X className="icon-default text-gray-600" />
+                <X className="icon-sm text-gray-600" />
               </Button>
             </SheetClose>
           </SheetHeader>
@@ -87,7 +87,7 @@ export const SideCart = () => {
             {store?.products?.length > 0 ? (
               store?.products.map(product => <CartProduct key={product.id} product={product} />)
             ) : (
-              <div className=" grid h-screen place-content-center gap-y-4 text-center text-brand-1">
+              <div className=" grid h-[85vh] place-content-center gap-y-4 text-center text-brand-1">
                 <ShoppingBag className="mx-auto h-8 w-8" />
                 <h3 className="text-xl font-medium">Your cart is empty</h3>
 

@@ -9,15 +9,13 @@ import { navbarLinks } from '@/shared/constants/links';
 import { ROUTES } from '@/shared/constants/routes';
 import { useAuth } from '@/shared/hooks/use-auth';
 import { cn } from '@/shared/utils/commons';
-import { Menu, ShoppingCart } from 'lucide-react';
 import { buttonVariants } from '../ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
 import { Logo } from './logo';
+import { MobileMenu } from './mobile-menu';
 import { UserNav } from './user-nav';
 
 export const Navbar = () => {
   const [offset, setOffset] = React.useState(false);
-  const [isOpen, setIsOpen] = React.useState(false);
   const pathname = usePathname();
   const { user } = useAuth();
 
@@ -54,7 +52,7 @@ export const Navbar = () => {
           ))}
         </nav>
 
-        <div className="hidden sm:flex sm:items-center sm:gap-x-3.5">
+        <div className="flex items-center gap-x-3.5">
           <SideCart />
 
           {user ? (
@@ -62,14 +60,19 @@ export const Navbar = () => {
           ) : (
             <Link
               href={ROUTES.LOGIN}
-              className={buttonVariants({ variant: 'outline', className: '!bg-transparent' })}
+              className={buttonVariants({
+                variant: 'outline',
+                className: 'hidden !bg-transparent sm:inline-flex',
+              })}
             >
               Sign in
             </Link>
           )}
+
+          <MobileMenu user={user} pathname={pathname} />
         </div>
 
-        <div className="sm:hidden">
+        {/* <div className="sm:hidden">
           <Sheet>
             <SheetTrigger>
               <Menu className="icon-xs" />
@@ -106,7 +109,7 @@ export const Navbar = () => {
               </div>
             </SheetContent>
           </Sheet>
-        </div>
+        </div> */}
       </div>
     </header>
   );

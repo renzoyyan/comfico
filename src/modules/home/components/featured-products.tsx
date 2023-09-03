@@ -2,7 +2,7 @@ import { ProductCard } from '@/modules/product/components/product-card';
 import { getProducts } from '@/modules/product/services';
 
 export const FeaturedProducts = async () => {
-  const { data: featuredProducts } = await getProducts({ is_featured: true });
+  const { data: featuredProducts } = await getProducts({ is_featured: true, per_page: 5 });
 
   return (
     <section className="relative">
@@ -12,7 +12,7 @@ export const FeaturedProducts = async () => {
 
         <div className="mt-12">
           <div className="flex snap-x snap-mandatory gap-x-4 overflow-x-auto scrollbar-hide sm:gap-x-6  lg:grid lg:grid-cols-4">
-            {featuredProducts.map(product => (
+            {featuredProducts?.items?.map(product => (
               <ProductCard
                 variant={'outline'}
                 key={product.id}

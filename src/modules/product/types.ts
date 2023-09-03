@@ -47,4 +47,4 @@ export type Category = {
   updated_at: string;
 };
 
-export type CheckoutPayload = { products: Product[]; user_id: string };
+export type CheckoutPayload = { products: Product[]; user_id: string; order_id?: string };

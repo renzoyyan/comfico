@@ -1,8 +1,9 @@
+import { Paginated } from '@/shared/types/commons';
 import api from '@/shared/utils/api';
 import { AxiosResponse } from 'axios';
 import { Category, CheckoutPayload, Product } from './types';
 
-export const getProducts = (params?: any): Promise<AxiosResponse<Product[]>> => {
+export const getProducts = (params?: any): Promise<AxiosResponse<Paginated<Product>>> => {
   return api.get('/api/products', { params });
 };
 
