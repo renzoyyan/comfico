@@ -16,7 +16,7 @@ export const Products = async () => {
       <div className="container py-36 ">
         <div className="mb-10 flex items-center">
           <h2 className="section-heading flex-1 text-4xl">More Selection</h2>
-          <Link href={`${ROUTES.SHOP}?category_id=64a92197d5b37ea832af0f51`}>
+          <Link href={ROUTES.SHOP}>
             <Button variant={'outline'} size={'sm'}>
               View all
             </Button>
