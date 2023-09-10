@@ -5,6 +5,7 @@ import { cn } from '@/shared/utils/commons';
 import { Playfair_Display, Source_Sans_3 } from 'next/font/google';
 import { Toaster as RHToaster } from 'react-hot-toast';
 import '../styles/globals.css';
+import { sharedMetadata } from './shared-metadata';
 
 const playfair_display = Playfair_Display({
   subsets: ['latin'],
@@ -19,7 +20,10 @@ const source_sans_3 = Source_Sans_3({
 
 export const metadata = {
   title: 'Comfico',
-  description: 'Elevate Your Space with Timeless Style.',
+  description:
+    'Where Every Chair Becomes a Cozy Retreat, Transforming Your Space into a Haven of Relaxation and Serenity.',
+  openGraph: { ...sharedMetadata },
+  twitter: { ...sharedMetadata },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
