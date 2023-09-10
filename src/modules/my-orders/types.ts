@@ -19,3 +19,8 @@ interface IOrderItem {
   product: Product;
   quantity: number;
 }
+
+export interface Params {
+  user_id: string;
+  page: number;
+}

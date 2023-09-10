@@ -1,8 +1,9 @@
-import { Playfair_Display, Source_Sans_3 } from 'next/font/google';
 import { Toaster } from '@/shared/components/ui/toaster';
-import { Toaster as RHToaster } from 'react-hot-toast';
-import { cn } from '@/shared/utils/commons';
 import { NextAuthProvider } from '@/shared/layout';
+import ReactQueryProvider from '@/shared/layout/react-query-provider';
+import { cn } from '@/shared/utils/commons';
+import { Playfair_Display, Source_Sans_3 } from 'next/font/google';
+import { Toaster as RHToaster } from 'react-hot-toast';
 import '../styles/globals.css';
 
 const playfair_display = Playfair_Display({
@@ -27,7 +28,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={cn('bg-white font-source-sans-3')}>
         <Toaster />
         <RHToaster />
-        <NextAuthProvider>{children}</NextAuthProvider>
+        <ReactQueryProvider>
+          <NextAuthProvider>{children}</NextAuthProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   );

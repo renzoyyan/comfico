@@ -3,7 +3,6 @@ import { ArrowLeft } from 'lucide-react';
 import { getServerSession } from 'next-auth';
 import Image from 'next/image';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
 
 import { getOrder } from '@/modules/my-orders/services';
 import { UserNavbar } from '@/shared/components/partials';
@@ -15,8 +14,6 @@ import { formatDate } from '@/shared/utils/commons';
 const OrderDetailsPage = async ({ params }: { params: { orderId: string } }) => {
   const session = await getServerSession(authOptions);
   const user = session?.user;
-
-  if (!session) return redirect('/');
 
   const { data: order } = await getOrder(params.orderId, user?.access_token);
 
